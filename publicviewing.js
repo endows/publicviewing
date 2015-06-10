@@ -1,3 +1,11 @@
+Users = new Meteor.Collection('users')
+Channels = new Meteor.Collection('channels',{
+  transform:function(doc){
+    doc.visitors = Users.find({visiting_channel_id:doc._id}).fetch()
+    return doc
+  }
+})
+
 if (Meteor.isClient) {
   // counter starts at 0
   Session.setDefault('counter', 0);
