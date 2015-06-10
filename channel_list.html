@@ -1,8 +1,15 @@
 <template name='channel_list'>
 {{> loginButtons}}
 {{#each channels}}
+<a href="/{{_id}}">
 <p>
   {{name}}
 </p>
+</a>
+  {{#each visitors}}
+  <p>
+    {{_id}}
+  </p>
+  {{/each}}
 {{/each}}
 </template>
