@@ -1,4 +1,9 @@
 <template name='channel'>
 <h1>This is channel template!</h1>
 <h1>{{channel.name}}</h1>
+{{#each channel.visitors}}
+<p>
+  {{_id}}
+</p>
+{{/each}}
 </template>

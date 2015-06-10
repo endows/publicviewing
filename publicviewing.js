@@ -4,9 +4,10 @@ Users.allow({
     return true
   }
 })
+
 Channels = new Meteor.Collection('channels',{
   transform:function(doc){
-    doc.visitors = Users.find({visiting_channel_id:doc._id}).fetch()
+    doc.visitors = Users.find({visiting_channel_id:doc._id})
     return doc
   }
 })
@@ -31,7 +32,7 @@ Router.route('/:_id', function () {
     }
   })
   this.render('channel');
-});
+})
 
 if(Meteor.isClient){
   Meteor.subscribe('users')
