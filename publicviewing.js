@@ -5,11 +5,6 @@ Users.allow({
   }
 })
 
-<<<<<<< HEAD
-Channels = new Meteor.Collection('channels',{
-  transform:function(doc){
-    doc.visitors = Users.find({visiting_channel_id:doc._id})
-=======
 
 Channels = new Meteor.Collection('channels',{
   transform:function(doc){
@@ -22,7 +17,6 @@ Posts = new Meteor.Collection('posts',{
   transform:function(doc){
     doc.user = Users.findOne(doc.user)
     doc.channel = Channels.findOne(doc.channel)
->>>>>>> post_with_user_id
     return doc
   }
 })
