@@ -60,9 +60,12 @@ Router.route('/:_id', function () {
 })
 
 if(Meteor.isClient){
-  Meteor.subscribe('users')
-  Meteor.subscribe('channels')
-  Meteor.subscribe('posts')
+  Tracker.autorun(function(){
+    Meteor.subscribe('users')
+    Meteor.subscribe('channels')
+    Meteor.subscribe('posts',Session.get('channel_id'))
+  })
+
 }
 
 if(Meteor.isServer){
@@ -72,7 +75,7 @@ if(Meteor.isServer){
   Meteor.publish('channels',function(){
     return Channels.find()
   })
-  Meteor.publish('posts',function(){
-    return Posts.find()
+  Meteor.publish('posts',function(channel_id){
+    return Posts.find({channel:channel_id})
   })
 }
