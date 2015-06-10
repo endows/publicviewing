@@ -6,26 +6,21 @@ Channels = new Meteor.Collection('channels',{
   }
 })
 
-if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault('counter', 0);
-
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
+Router.route('/', function () {
+  Template.channel_list.helpers({
+    channels:function(){
+      return Channels.find()
     }
-  });
+  })
+  this.render('channel_list');
+});
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
+Router.route('/:_id', function () {
+  Session.set('channel_id',this.params._id)
+  Template.channel.helpers({
+    channel:function(){
+      return Channels.findOne(Session.get('channel_id'))
     }
-  });
-}
-
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
-}
+  })
+  this.render('channel');
+});
