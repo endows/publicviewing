@@ -1,9 +1,19 @@
 <template name='channel'>
 <h1>This is channel template!</h1>
+<input type='text' />
+<button>発言</button>
 <h1>{{channel.name}}</h1>
 {{#each channel.visitors}}
 <p>
   {{_id}}
+<<<<<<< HEAD
+=======
+  {{#each posts}}
+  <p>
+    {{body}}
+  </p>
+  {{/each}}
+>>>>>>> post_with_user_id
 </p>
 {{/each}}
 </template>
