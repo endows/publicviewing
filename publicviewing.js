@@ -12,6 +12,8 @@ Channels = new Meteor.Collection('channels',{
   }
 })
 
+Posts = new Meteor.Collection('posts')
+
 Router.route('/', function () {
   Meteor.users.update({_id: Meteor.userId()},{$set:{visiting_channel_id:''}})
 
@@ -31,12 +33,23 @@ Router.route('/:_id', function () {
       return Channels.findOne(Session.get('channel_id'))
     }
   })
+  Template.channel.events({
+    'click button':function(){
+      var val = $('input').val()
+      $('input').val("")
+      if(!val){
+        return true
+      }
+      Posts.insert({user:Meteor.userId(),body:val,channel:Session.get('channel_id')})
+    }
+  })
   this.render('channel');
 })
 
 if(Meteor.isClient){
   Meteor.subscribe('users')
   Meteor.subscribe('channels')
+  Meteor.subscribe('posts')
 }
 
 if(Meteor.isServer){
@@ -45,5 +58,8 @@ if(Meteor.isServer){
   })
   Meteor.publish('channels',function(){
     return Channels.find()
+  })
+  Meteor.publish('posts',function(){
+    return Posts.find()
   })
 }
