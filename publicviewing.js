@@ -5,6 +5,7 @@ Users.allow({
   }
 })
 
+
 Channels = new Meteor.Collection('channels',{
   transform:function(doc){
     doc.visitors = Users.find({visiting_channel_id:doc._id})
@@ -12,7 +13,19 @@ Channels = new Meteor.Collection('channels',{
   }
 })
 
-Posts = new Meteor.Collection('posts')
+Posts = new Meteor.Collection('posts',{
+  transform:function(doc){
+    doc.user = Users.findOne(doc.user)
+    doc.channel = Channels.findOne(doc.channel)
+    return doc
+  }
+})
+
+Users._transform = function(doc){
+  doc.posts = Posts.find({user:doc._id})
+  return doc
+}
+
 
 Router.route('/', function () {
   Meteor.users.update({_id: Meteor.userId()},{$set:{visiting_channel_id:''}})
