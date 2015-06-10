@@ -12,6 +12,8 @@ Channels = new Meteor.Collection('channels',{
 })
 
 Router.route('/', function () {
+  Meteor.users.update({_id: Meteor.userId()},{$set:{visiting_channel_id:''}})
+
   Template.channel_list.helpers({
     channels:function(){
       return Channels.find()
@@ -22,7 +24,7 @@ Router.route('/', function () {
 
 Router.route('/:_id', function () {
   Session.set('channel_id',this.params._id)
-
+  Meteor.users.update({_id: Meteor.userId()},{$set:{visiting_channel_id:Session.get('channel_id')}})
   Template.channel.helpers({
     channel:function(){
       return Channels.findOne(Session.get('channel_id'))
@@ -32,5 +34,15 @@ Router.route('/:_id', function () {
 });
 
 if(Meteor.isClient){
+  Meteor.subscribe('users')
+  Meteor.subscribe('channels')
+}
 
+if(Meteor.isServer){
+  Meteor.publish('users',function(){
+    return Meteor.users.find({},{visiting_channel_id:1})
+  })
+  Meteor.publish('channels',function(){
+    return Channels.find()
+  })
 }
