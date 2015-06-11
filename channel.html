@@ -4,7 +4,13 @@
 <input type='text' />
 <button>発言</button>
 <h1>{{channel.name}}</h1>
-{{#each channel.visitors}}
+<p>User:{{currentUser.name}}</p>
+{{#each users}}
+<p>
+  {{name}}
+</p>
+{{/each}}
+<!-- {{#each channel.visitors}}
 <p>
   {{_id}}
   {{#each posts}}
@@ -13,5 +19,5 @@
   </p>
   {{/each}}
 </p>
-{{/each}}
+{{/each}} -->
 </template>

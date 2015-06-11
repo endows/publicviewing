@@ -77,6 +77,9 @@ Router.route('/:_id', function() {
   Template.channel.helpers({
     channel: function() {
       return Channels.findOne(Session.get('channel_id'))
+    },
+    users:function(){
+      return Users.find({visiting_channel_id:Session.get('channel_id'),_id:{$not:Meteor.userId()}})
     }
   })
   Template.channel.events({
