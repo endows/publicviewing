@@ -26,7 +26,6 @@ Users._transform = function(doc){
   return doc
 }
 
-
 Router.route('/', function () {
   Meteor.users.update({_id: Meteor.userId()},{$set:{visiting_channel_id:''}})
 
@@ -65,10 +64,15 @@ if(Meteor.isClient){
     Meteor.subscribe('channels')
     Meteor.subscribe('posts',Session.get('channel_id'))
   })
-
 }
 
 if(Meteor.isServer){
+  Accounts.onCreateUser(function (options, user) {
+    user.image = user.services.twitter.profile_image_url
+    user.name = options.profile.name
+    user._id = user.services.twitter.id
+    return user;
+  });
   Meteor.publish('users',function(){
     return Meteor.users.find({},{visiting_channel_id:1})
   })
