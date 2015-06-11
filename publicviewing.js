@@ -1,70 +1,109 @@
 Users = Meteor.users
 Users.allow({
-  update:function(){
+  update: function() {
     return true
   }
 })
 
 
-Channels = new Meteor.Collection('channels',{
-  transform:function(doc){
-    doc.visitors = Users.find({visiting_channel_id:doc._id})
+Channels = new Meteor.Collection('channels', {
+  transform: function(doc) {
+    doc.visitors = Users.find({
+      visiting_channel_id: doc._id
+    })
     return doc
   }
 })
 
-Posts = new Meteor.Collection('posts',{
-  transform:function(doc){
+Posts = new Meteor.Collection('posts', {
+  transform: function(doc) {
     doc.user = Users.findOne(doc.user)
     doc.channel = Channels.findOne(doc.channel)
     return doc
   }
 })
 
-Users._transform = function(doc){
-  doc.posts = Posts.find({user:doc._id})
+Users._transform = function(doc) {
+  doc.posts = Posts.find({
+    user: doc._id
+  })
   return doc
 }
 
-Router.route('/', function () {
-  Meteor.users.update({_id: Meteor.userId()},{$set:{visiting_channel_id:''}})
-
-  Template.channel_list.helpers({
-    channels:function(){
-      return Channels.find()
+Router.route('/', function() {
+  Meteor.users.update({
+    _id: Meteor.userId()
+  }, {
+    $set: {
+      visiting_channel_id: ''
     }
   })
+
+  Template.channel_list.helpers({
+    channels: function() {
+      return Channels.find().fetch().sort(function(a, b) {
+        return a.visitors.count() < b.visitors.count()
+      })
+    }
+  })
+
+  Template.channel_list.events({
+    'click button': function() {
+      var val = $('input').val()
+      $('input').val("")
+      if (!val) {
+        return true
+      }
+      Channels.insert({
+        name: val
+      }, function(err, _id) {
+        Router.go('/' + _id)
+      })
+    }
+  })
+
   this.render('channel_list');
 });
 
-Router.route('/:_id', function () {
-  Session.set('channel_id',this.params._id)
-  Meteor.users.update({_id: Meteor.userId()},{$set:{visiting_channel_id:Session.get('channel_id')}})
+Router.route('/:_id', function() {
+  Session.set('channel_id', this.params._id)
+  Meteor.users.update({
+    _id: Meteor.userId()
+  }, {
+    $set: {
+      visiting_channel_id: Session.get('channel_id')
+    }
+  })
   Template.channel.helpers({
-    channel:function(){
+    channel: function() {
       return Channels.findOne(Session.get('channel_id'))
     }
   })
   Template.channel.events({
-    'click button':function(){
+    'click button': function() {
       var val = $('input').val()
       $('input').val("")
-      if(!val){
+      if (!val) {
         return true
       }
-      Posts.insert({user:Meteor.userId(),body:val,channel:Session.get('channel_id')})
+      Posts.insert({
+        user: Meteor.userId(),
+        body: val,
+        channel: Session.get('channel_id')
+      })
     }
   })
   this.render('channel');
 })
 
-if(Meteor.isClient){
-  Tracker.autorun(function(){
+if (Meteor.isClient) {
+  Tracker.autorun(function() {
     Meteor.subscribe('users')
     Meteor.subscribe('channels')
-    Meteor.subscribe('posts',Session.get('channel_id'))
+    Meteor.subscribe('posts', Session.get('channel_id'))
   })
 }
+
 
 if(Meteor.isServer){
   Accounts.onCreateUser(function (options, user) {
@@ -73,13 +112,18 @@ if(Meteor.isServer){
     user._id = user.services.twitter.id
     return user;
   });
-  Meteor.publish('users',function(){
-    return Meteor.users.find({},{visiting_channel_id:1})
+
+  Meteor.publish('users', function() {
+    return Meteor.users.find({}, {
+      visiting_channel_id: 1
+    })
   })
-  Meteor.publish('channels',function(){
+  Meteor.publish('channels', function() {
     return Channels.find()
   })
-  Meteor.publish('posts',function(channel_id){
-    return Posts.find({channel:channel_id})
+  Meteor.publish('posts', function(channel_id) {
+    return Posts.find({
+      channel: channel_id
+    })
   })
 }
