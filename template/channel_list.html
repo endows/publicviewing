@@ -1,17 +1,11 @@
 <template name='channel_list'>
-{{> loginButtons}}
-<input type="text">
-<button>チャンネルを作成</button>
-{{#each channels}}
-<a href="/{{_id}}">
-<p>
-  {{name}}
-</p>
-</a>
+  <h1>パブリックビューイング</h1>
+  <input type="text">
+  <button>チャンネルを作成</button>
+  {{#each channels}}
+  <a href="/{{_id}}">
+    <h4>{{name}}</h4>
+  </a>
   {{#each visitors}}
-  <p>
-    {{_id}}
-  </p>
-  {{/each}}
-{{/each}}
+  <img src="{{image}}" /> {{/each}} {{/each}}
 </template>

@@ -1,13 +1,30 @@
 <template name='channel'>
-<h1>This is channel template!</h1>
-{{> loginButtons}}
-<input type='text' />
-<button>発言</button>
-<h1>{{channel.name}}</h1>
-<p>User:{{currentUser.name}}</p>
-{{#each users}}
-<p>
-  {{name}}
-</p>
-{{/each}}
+  <h1>{{channel.name}}</h1>
+  {{#if currentUser}}
+    <input type='text' />
+    <button>発言</button>
+  {{else}}
+    {{> loginButtons}}
+  {{/if}}
+  <h4>
+    <img src="{{currentUser.image}}"/>
+    {{currentUser.name}}
+  </h4>
+  {{#each currentUser.posts}}
+    <p>
+      {{body}}
+    </p>
+  {{/each}}
+
+  {{#each users}}
+  <h4>
+    <img src="{{image}}"/>
+    {{name}}
+  </h4>
+    {{#each posts}}
+      <p>
+        {{body}}
+      </p>
+    {{/each}}
+  {{/each}}
 </template>
