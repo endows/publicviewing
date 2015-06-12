@@ -19,12 +19,14 @@ Router.route('/:_id', function() {
     }
   })
   Template.channel.events({
-    'click button': function() {
-      var val = $('input').val()
-      $('input').val("")
+    'submit form': function(event) {
+
+      var val = $('input#newPostBody').val()
+      $('input#newPostBody').val("")
       if (!val) {
         return true
       }
+
       Posts.insert({
         user: Meteor.userId(),
         body: val,
