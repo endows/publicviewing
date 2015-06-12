@@ -13,6 +13,9 @@ Router.route('/:_id', function() {
     },
     users:function(){
       return Users.find({visiting_channel_id:Session.get('channel_id'),_id:{$not:Meteor.userId()}})
+    },
+    current_url:function(){
+      return Router.current().url
     }
   })
   Template.channel.events({
