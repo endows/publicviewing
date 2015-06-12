@@ -15,7 +15,7 @@ Router.route('/:_id', function() {
       return Users.find({visiting_channel_id:Session.get('channel_id'),_id:{$not:Meteor.userId()}})
     },
     current_url:function(){
-      return Router.current().url
+      return Meteor.absoluteUrl(Session.get('channel_id'))
     }
   })
   Template.channel.events({
