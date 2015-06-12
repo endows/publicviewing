@@ -1,11 +1,25 @@
 <template name='channel_list'>
+
   <h1>パブリックビューイング</h1>
   <input type="text">
   <button>チャンネルを作成</button>
-  {{#each channels}}
-  <a href="/{{_id}}">
-    <h4>{{name}}</h4>
-  </a>
-  {{#each visitors}}
-  <img src="{{image}}" /> {{/each}} {{/each}}
+  <div class='container'>
+    <div class='list-group'>
+      {{#each channels}}
+      <a class='list-group-item' href="/{{_id}}">
+          <h4 class='list-group-item-heading'>{{name}}</h4>
+          {{#each visitors}}
+          <img src="{{image}}" />
+          {{/each}}
+      </a>
+       {{/each}}
+    </div>
+
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-success">Dapibus ac facilisis in</li>
+    <li class="list-group-item list-group-item-info">Cras sit amet nibh libero</li>
+    <li class="list-group-item list-group-item-warning">Porta ac consectetur ac</li>
+    <li class="list-group-item list-group-item-danger">Vestibulum at eros</li>
+  </ul>
 </template>

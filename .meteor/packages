@@ -11,3 +11,5 @@ accounts-base
 accounts-ui
 accounts-password
 accounts-twitter
+fortawesome:fontawesome
+twbs:bootstrap
