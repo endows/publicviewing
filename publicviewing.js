@@ -30,7 +30,7 @@ Users._transform = function(doc) {
     sort: {
       createAt: -1
     },
-    limit:5
+    limit:3
   })
   return doc
 }
@@ -42,7 +42,6 @@ if (Meteor.isClient) {
     Meteor.subscribe('posts', Session.get('channel_id'))
   })
 }
-
 
 if (Meteor.isServer) {
   Accounts.onCreateUser(function(options, user) {
