@@ -26,11 +26,14 @@ Posts = new Meteor.Collection('posts', {
 Users._transform = function(doc) {
   doc.posts = Posts.find({
     user: doc._id
+  }, {
+    sort: {
+      createAt: -1
+    },
+    limit:5
   })
   return doc
 }
-
-
 
 if (Meteor.isClient) {
   Tracker.autorun(function() {
@@ -41,8 +44,8 @@ if (Meteor.isClient) {
 }
 
 
-if(Meteor.isServer){
-  Accounts.onCreateUser(function (options, user) {
+if (Meteor.isServer) {
+  Accounts.onCreateUser(function(options, user) {
     user.image = user.services.twitter.profile_image_url
     user.name = options.profile.name
     user._id = user.services.twitter.id

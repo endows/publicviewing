@@ -30,7 +30,8 @@ Router.route('/:_id', function() {
       Posts.insert({
         user: Meteor.userId(),
         body: val,
-        channel: Session.get('channel_id')
+        channel: Session.get('channel_id'),
+        createAt:Date.now()
       })
     }
   })
