@@ -19,6 +19,9 @@ Router.route('/:_id', function() {
     }
   })
   Template.channel.events({
+    'click #loginButton':function(){
+      Meteor.loginWithTwitter()
+    },
     'submit form': function(event) {
 
       var val = $('input#newPostBody').val()
