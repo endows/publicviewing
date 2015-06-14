@@ -7,15 +7,6 @@
           <i class="fa fa-users"></i> パブリックビューイング / {{channel.name}}
         </a>
       </div>
-      <!-- share -->
-      {{#if currentUser}}
-        <div class='navbar-right'>
-          <a target="_blank" href="http://twitter.com/share?url={{current_url}}&text={{channel.name}}のパブリックビューイングに参加中">
-            <button class="btn btn-primary btn-lg"><i class="fa fa-twitter"></i>ツイート</button>
-          </a>
-        </div>
-      {{/if}}
-      <!-- share -->
     </div>
   </nav>
   <!-- nav -->
@@ -23,13 +14,22 @@
 
 
   <div class="container">
-
-
+    <!-- share -->
+    {{#if currentUser}}
     <div class="alert alert-warning alert-dismissible" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <strong>Warning!</strong> Better check yourself, you're not looking too good.
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>友達にも知らせますか？</strong> より楽しむことができます。
+      <br/>
+      <a target="_blank" href="https://twitter.com/share?url={{current_url}}&text={{channel.name}}のパブリックビューイングに参加中">
+        <button class="btn btn-primary">はい</button>
+      </a>
+      <button class="btn btn-default" data-dismiss="alert">あとにする</button>
     </div>
+    {{/if}}
     <div class="row">
+      <!-- share -->
 
       <!-- me -->
       {{#if currentUser}}
