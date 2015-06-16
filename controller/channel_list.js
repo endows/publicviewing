@@ -16,18 +16,7 @@ Router.route('/', function() {
   })
 
   Template.channel_list.events({
-    'click button': function() {
-      var val = $('input').val()
-      $('input').val("")
-      if (!val) {
-        return true
-      }
-      Channels.insert({
-        name: val
-      }, function(err, _id) {
-        Router.go('/' + _id)
-      })
-    },
+
 
   })
 
