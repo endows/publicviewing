@@ -1,4 +1,14 @@
 Router.route('/:_id', function() {
+  setInterval(function(){
+
+  $(".list-group-item-info").each(function(i,row){
+    var current_count = $(row).data('count')
+    $(row).data('count',current_count + 1)
+    if(current_count == 10){
+      $(row).removeClass('list-group-item-info')
+    }
+  })
+},100)
   Session.set('channel_id', this.params._id)
   Meteor.users.update({
     _id: Meteor.userId()
