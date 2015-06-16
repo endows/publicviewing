@@ -2,17 +2,26 @@
   {{> nav}}
   <div class='container'>
     <div class='row'>
-      <div class="list-group">
-        {{#each channels}}
-        <a href="/{{_id}}" class="list-group-item">
-          <h4 class="list-group-item-heading">{{name}}</h4>
-          {{#each visitors}}
-          <img src="{{image}}" class="list-group-item-text"/>
-          {{/each}}
-        </a>
-        {{/each}}
+      {{#each channels}}
+      <div class=" col-md-4">
+
+        <div class='panel panel-default'>
+          <a href="/{{_id}}">
+
+            <img class='img-responsive' src="{{image}}" />
+            <h1 class='' style="display:inline-block;">{{name}}</h1>
+            <h4 class=''>
+              <small>観戦中のユーザ</small>
+              {{#each visitors}}
+              <img src="{{image}}" class="" /> {{/each}}
+            </h4>
+          </a>
+
+        </div>
       </div>
+
+      {{/each}}
     </div>
   </div>
-{{> loginButtons}}
+  {{> loginButtons}}
 </template>
