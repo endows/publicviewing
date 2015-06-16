@@ -6,6 +6,8 @@ Users.allow({
 })
 
 
+
+
 Channels = new Meteor.Collection('channels', {
   transform: function(doc) {
     doc.visitors = Users.find({

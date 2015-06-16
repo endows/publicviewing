@@ -13,3 +13,6 @@ accounts-password
 accounts-twitter
 fortawesome:fontawesome
 twbs:bootstrap
+cfs:standard-packages
+cfs:gridfs
+cfs:filesystem

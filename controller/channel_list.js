@@ -27,7 +27,8 @@ Router.route('/', function() {
       }, function(err, _id) {
         Router.go('/' + _id)
       })
-    }
+    },
+
   })
 
   this.render('channel_list');
